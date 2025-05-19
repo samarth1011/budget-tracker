@@ -19,10 +19,19 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  isLoggedIn(): boolean {
+  return !!localStorage.getItem('access_token');
+}
+
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('access_token');
     return !this.jwtHelper.isTokenExpired(token!);
   }
+
+ getUserId(): number | undefined {
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  return user ? user.id : undefined;
+}
 
   private jwtHelper = new JwtHelperService();
 }

@@ -1,1 +1,146 @@
-<p>budget works!</p>
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div>
+            <h1 class="h2">Your Budget</h1>
+            <small class="text-muted">Manage your finances efficiently</small>
+        </div>
+      <div class="d-inline-block">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBudgetModal">
+    Add Budget
+  </button>
+</div>
+
+
+      
+
+        <!-- <button class="btn btn-secondary" (click)="exportCategories()">Export</button> -->
+      
+    </div>
+
+
+      <!-- You can add more sections here like recent transactions, charts, etc. -->
+      <br>
+      
+<div *ngIf="loading" class="text-center my-3">
+  <div class="spinner-border" role="status"></div>
+  <p>Loading budget...</p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<div *ngIf="message" class="alert alert-success">{{ message }}</div>
+
+<table *ngIf="budgets.length > 0" class="table table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Month</th>
+      <th>Year</th>
+        <th>Amount (INR)</th>
+        <th>Amount Remaining</th>
+       <th class="text-center">Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let budget of budgets">
+      <td>{{ budget.id  }}</td>
+      <td>{{ budget.month }}</td>
+       <td>{{ budget.year  }}</td>
+      <td>{{ budget.amount  }}</td>
+       <td>{{ budget.budget_remaining  }}</td>
+     <td class="text-center">
+  <div class="d-inline-flex gap-2">
+    <button class="btn btn-danger btn-sm" (click)="deleteBudget(budget.id)">Delete</button>
+    <button class="btn btn-primary btn-sm"   data-bs-toggle="modal" data-bs-target="#editBudgetModal" (click)="getBudgetById(budget.id)">Edit</button>
+
+    
+      <div class="modal fade" id="editBudgetModal" tabindex="-1" aria-labelledby="editBudgetModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" style="text-align: left;">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editBudgetModalLabel">Edit Budget</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="updateBudget(editBudget)" #budgetForm="ngForm">
+  <div class="mb-3">
+    <!-- Month Selector -->
+    <label for="budgetMonth" class="form-label">Month</label>
+    <select class="form-select" id="budgetMonth" [(ngModel)]="editBudget.month" name="month" required>
+      <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <!-- Year Selector -->
+    <label for="budgetYear" class="form-label">Year</label>
+    <select class="form-select" id="budgetYear" [(ngModel)]="editBudget.year" name="year" required>
+      <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <!-- Amount -->
+    <label for="budgetAmount" class="form-label">Amount</label>
+    <input type="number" class="form-control" id="budgetAmount" [(ngModel)]="editBudget.amount" name="amount" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Edit Budget</button>
+</form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+  </div>
+</td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!loading && budgets.length === 0" class="alert alert-info">
+  No categories found.
+</div>
+      
+    
+
+      <div class="modal fade" id="addBudgetModal" tabindex="-1" aria-labelledby="addBudgetModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addBudgetModalLabel">Add Budget</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="addBudget()" #budgetForm="ngForm">
+  <div class="mb-3">
+    <!-- Month Dropdown -->
+    <label for="budgetMonth" class="form-label">Budget Month</label>
+    <select class="form-select" id="budgetMonth" [(ngModel)]="newBudget.month" name="month" required>
+      <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <!-- Year Dropdown -->
+    <label for="budgetYear" class="form-label">Budget Year</label>
+    <select class="form-select" id="budgetYear" [(ngModel)]="newBudget.year" name="year" required>
+      <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <!-- Amount Input -->
+    <label for="budgetAmount" class="form-label">Budget Amount</label>
+    <input type="number" class="form-control" id="budgetAmount" [(ngModel)]="newBudget.amount" name="amount" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add Budget</button>
+</form>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+
