@@ -6,7 +6,6 @@ router = DefaultRouter()
 router.register('categories', CategoryViewSet)
 router.register('transactions', TransactionViewSet)
 router.register('budgets', BudgetViewSet)
-# router.register('dashboard', DashboardAPIView.as_view(), basename='dashboard')
 
 urlpatterns = [
     path('', include(router.urls)),
