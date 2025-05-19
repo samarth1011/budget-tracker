@@ -10,14 +10,14 @@ if [ -z "$PROJECT_MAIN_DIR_NAME" ]; then
 fi
 
 # Change ownership to ubuntu user
-sudo chown -R ubuntu:ubuntu "/home/ubuntu/$PROJECT_MAIN_DIR_NAME"
+sudo chown -R ubuntu:ubuntu "/home/ubuntu/$PROJECT_MAIN_DIR_NAME/$PROJECT_MAIN_DIR_NAME"
 
 # Change directory to the project main directory
-cd "/home/ubuntu/$PROJECT_MAIN_DIR_NAME"
+cd "/home/ubuntu/$PROJECT_MAIN_DIR_NAME/$PROJECT_MAIN_DIR_NAME"
 
 # Activate virtual environment
 echo "Activating virtual environment..."
-source "/home/ubuntu/$PROJECT_MAIN_DIR_NAME/venv/bin/activate"
+source "/home/ubuntu/$PROJECT_MAIN_DIR_NAME/env/bin/activate"
 
 # Run collectstatic command
 echo "Running collectstatic command..."

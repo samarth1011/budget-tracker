@@ -14,7 +14,7 @@ sudo chown -R ubuntu:ubuntu "/home/ubuntu/$PROJECT_MAIN_DIR_NAME"
 
 # Create virtual environment
 echo "Creating virtual environment..."
-virtualenv "/home/ubuntu/$PROJECT_MAIN_DIR_NAME/venv"
+virtualenv "/home/ubuntu/$PROJECT_MAIN_DIR_NAME/env"
 
 # Activate virtual environment
 echo "Activating virtual environment..."
