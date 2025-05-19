@@ -4,14 +4,40 @@ from .models import Category, Transaction, Budget
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['id', 'name', 'user', 'created_at']  # Include user but don't require it
+        read_only_fields = ['user']      
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = '__all__'
+        fields = ['id', 'category', 'amount', 'transaction_type', 'date', 'description', 'user']
+        read_only_fields = ['user','id']   
 
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
-        fields = '__all__'
+        fields = ['id', 'month', 'amount', 'user','created_at', 'year', 'budget_remaining', 'budget_spent']
+        read_only_fields = ['user','id']
+
+
+
+class IncomeExpenseMonthlySerializer(serializers.Serializer):
+    month = serializers.CharField()
+    income = serializers.DecimalField(max_digits=10, decimal_places=2)
+    expense = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+
+class CategoryExpenseSerializer(serializers.Serializer):
+    category = serializers.CharField()
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+
+class DashboardSerializer(serializers.Serializer):
+    total_income = serializers.DecimalField(max_digits=10, decimal_places=2)
+    total_expense = serializers.DecimalField(max_digits=10, decimal_places=2)
+    total_budget = serializers.DecimalField(max_digits=10, decimal_places=2)
+    budget_remaining = serializers.DecimalField(max_digits=10, decimal_places=2)
+    income_expense_monthly = IncomeExpenseMonthlySerializer(many=True)
+    category_expenses = CategoryExpenseSerializer(many=True)
+
+        
