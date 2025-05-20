@@ -9,7 +9,7 @@ import { Transaction } from '../models/Transaction';
   providedIn: 'root'
 })
 export class DashboardService {
-  private baseUrl = 'http://localhost:8000/api'; // your backend URL here
+  private baseUrl = 'http://13.60.37.79/api'; // your backend URL here
 
   constructor(private http: HttpClient) {}
 

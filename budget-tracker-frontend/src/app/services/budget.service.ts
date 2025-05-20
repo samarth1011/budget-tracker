@@ -5,7 +5,7 @@ import { Budget } from '../models/Budget';
 
 @Injectable({ providedIn: 'root' })
 export class BudgetService {
-  private apiUrl = 'http://127.0.0.1:8000/api/budgets/';
+  private apiUrl = 'http://13.60.37.79/api/budgets/';
 
   constructor(private http: HttpClient) {}
 

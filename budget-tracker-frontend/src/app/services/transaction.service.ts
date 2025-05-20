@@ -7,7 +7,7 @@ import { Transaction } from '../models/Transaction';
   providedIn: 'root'
 })
 export class TransactionService {
-  private apiUrl = 'http://localhost:8000/api/transactions/'; 
+  private apiUrl = 'http://13.60.37.79/api/transactions/'; 
 
   constructor(private http: HttpClient) {}
 
