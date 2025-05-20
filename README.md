@@ -56,11 +56,6 @@ A modern web application to help users **track expenses, manage budgets**, and *
 
 ---
 
-## 📁 Project Structure
-
-
----
-
 ## 🔧 Getting Started
 
 ### Backend – Django
