@@ -3,6 +3,7 @@
 A modern web application to help users **track expenses, manage budgets**, and **visualize financial data** with beautiful, interactive charts. Built using Angular and Django REST Framework.
 
 🌐 **Live App**: [https://budget-tracker-frontend-ten-kappa.vercel.app/](https://budget-tracker-frontend-ten-kappa.vercel.app/)  
+🌐 **Backend API**: [https://budget-tracker-rsz8.vercel.app/api/](https://budget-tracker-rsz8.vercel.app/api/)  
 📦 **GitHub Repo**: [https://github.com/samarth1011/budget-tracker](https://github.com/samarth1011/budget-tracker)
 
 ---
