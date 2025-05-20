@@ -73,23 +73,25 @@ npm install
 ng serve
 
 ```
-
 Then visit: http://localhost:4200
 
-🧪 API Endpoints (Django REST)
+---
 
-GET/POST /api/transactions/
+## 🧪 API Endpoints (Django REST)
 
-GET/POST /api/categories/
+- GET/POST /api/transactions/
 
-GET/POST /api/budgets/
+- GET/POST /api/categories/
 
-📊 Visualizations
-Built using D3.js and Angular, including:
+- GET/POST /api/budgets/
 
-Line chart for monthly trends
+## 📊 Visualizations
 
-Pie chart for category distribution
+- Built using D3.js and Angular, including:
 
-Progress bars for budget usage
+- Line chart for monthly trends
+
+- Pie chart for category distribution
+
+- Progress bars for budget usage
 
