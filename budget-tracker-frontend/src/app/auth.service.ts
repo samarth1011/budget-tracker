@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string) {
-    return this.http.post(this.API_URL, { username, password }, { withCredentials: true });
+    return this.http.post(this.API_URL, { username, password }, { withCredentials: false });
   }
 
   logout() {
