@@ -100,11 +100,14 @@ WSGI_APPLICATION = 'budget_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'budget_db',  # e.g., budget_tracker
+        'USER': 'postgres',
+        'PASSWORD': 'Pccoe1234',
+        'HOST': 'database-1.cruqsq6ge3qx.eu-north-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
