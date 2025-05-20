@@ -66,7 +66,9 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOWED_ORIGINS = [
+    "https://https://budget-tracker-frontend-jl8vbkkay-samarth1011s-projects.vercel.app",  
+]
 
 ROOT_URLCONF = 'budget_tracker.urls'
 
