@@ -48,7 +48,11 @@ A modern web application to help users **track expenses, manage budgets**, and *
 > Responsive, clean layout with intuitive navigation  
 > Smart filters, CRUD operations, and real-time charts  
 >  
-> Add screenshots here if you'd like (recommended for GitHub)!
+>![Dashboard](image.png)
+>![Transactions](image-1.png)
+>![Categories](image-2.png)
+>![Budget](image-3.png)
+>![Add Transaction](image-4.png)
 
 ---
 
