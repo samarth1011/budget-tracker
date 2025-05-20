@@ -70,6 +70,10 @@ CORS_ALLOWED_ORIGINS = [
     "https://budget-tracker-frontend-ten-kappa.vercel.app",  
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://budget-tracker-frontend-ten-kappa.vercel.app"
+]
+
 ROOT_URLCONF = 'budget_tracker.urls'
 
 TEMPLATES = [
@@ -139,7 +143,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URLS ='/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
