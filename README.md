@@ -61,14 +61,14 @@ A modern web application to help users **track expenses, manage budgets**, and *
 
 ### Backend – Django
 ```bash
-cd backend/
+cd budget_tracker/
 python -m venv venv
 source venv/bin/activate  # For Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 
-cd frontend/
+cd budget-tracker-frontend/
 npm install
 ng serve
 
