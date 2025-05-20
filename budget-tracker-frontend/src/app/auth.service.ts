@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private API_URL = 'http://13.60.37.79/api/token/';
+  private API_URL = 'https://budget-tracker-rsz8.vercel.app/api/token/';
 
   constructor(private http: HttpClient, private router: Router) {}
 

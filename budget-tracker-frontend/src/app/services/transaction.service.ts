@@ -7,7 +7,7 @@ import { Transaction } from '../models/Transaction';
   providedIn: 'root'
 })
 export class TransactionService {
-  private apiUrl = 'http://13.60.37.79/api/transactions/'; 
+  private apiUrl = 'https://budget-tracker-rsz8.vercel.app/api/transactions/'; 
 
   constructor(private http: HttpClient) {}
 

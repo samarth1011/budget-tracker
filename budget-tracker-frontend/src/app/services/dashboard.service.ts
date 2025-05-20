@@ -9,7 +9,7 @@ import { Transaction } from '../models/Transaction';
   providedIn: 'root'
 })
 export class DashboardService {
-  private baseUrl = 'http://13.60.37.79/api'; // your backend URL here
+  private baseUrl = 'https://budget-tracker-rsz8.vercel.app/api'; // your backend URL here
 
   constructor(private http: HttpClient) {}
 
