@@ -90,9 +90,7 @@ Then visit: http://localhost:4200
 
 - Built using D3.js and Angular, including:
 
-- Line chart for monthly trends
-
 - Pie chart for category distribution
 
-- Progress bars for budget usage
+- Bar Chart for month expense comparison
 
