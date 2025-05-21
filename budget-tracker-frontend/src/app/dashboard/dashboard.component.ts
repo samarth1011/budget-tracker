@@ -48,12 +48,15 @@ months = [
 
   }
 
+  
+
 
   fetchDashboard() {
   this.dashboardService.getDashboardData(this.selectedMonth, this.selectedYear).subscribe(
     (data) => {
       this.dashboardData = data;
       this.dashboardChartsComponent.renderCategoryWiseExpenses(data.category_expenses);
+      this.dashboardChartsComponent.ngOnInit();
     },
     (error) => {
       console.error('Error fetching dashboard data:', error);
