@@ -53,10 +53,7 @@ months = [
   this.dashboardService.getDashboardData(this.selectedMonth, this.selectedYear).subscribe(
     (data) => {
       this.dashboardData = data;
-       if (this.dashboardChartsComponent) {
-        this.dashboardChartsComponent.renderCategoryWiseExpenses(data.category_expenses);
-      }
-
+      this.dashboardChartsComponent.renderCategoryWiseExpenses(data.category_expenses);
     },
     (error) => {
       console.error('Error fetching dashboard data:', error);
