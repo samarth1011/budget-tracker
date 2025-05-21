@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {  DashboardService } from '../services/dashboard.service';
 import { TransactionsComponent } from '../transactions/transactions.component';
 import { Category } from '../models/Category';
@@ -18,6 +18,9 @@ export class DashboardComponent {
   categories: Category[] = [];
   transactions: Transaction[] = [];
 dashboardData: any;
+
+@ViewChild(DashboardChartsComponent)
+  dashboardChartsComponent!: DashboardChartsComponent;
 
 selectedMonth: number = new Date().getMonth() + 1; // Default current month
 selectedYear: number = new Date().getFullYear();   // Default current year
@@ -42,9 +45,7 @@ months = [
     this.loadCategories();
     this.loadTransactions();
     this.fetchDashboard();
-  //   this.dashboardService.getDashboardData().subscribe((data) => {
-  //   this.dashboardData = data;
-  // });
+
   }
 
 
@@ -52,6 +53,10 @@ months = [
   this.dashboardService.getDashboardData(this.selectedMonth, this.selectedYear).subscribe(
     (data) => {
       this.dashboardData = data;
+       if (this.dashboardChartsComponent) {
+        this.dashboardChartsComponent.renderCategoryWiseExpenses(data.category_expenses);
+      }
+
     },
     (error) => {
       console.error('Error fetching dashboard data:', error);
