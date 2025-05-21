@@ -68,16 +68,26 @@ class DashboardAPIView(APIView):
         current_year = datetime.datetime.now().year
         current_month = datetime.datetime.now().month
 
-        # Total Income
+        # Total Income for current month
         total_income = (
-            Transaction.objects.filter(user=user, transaction_type="Income")
+            Transaction.objects.filter(
+                user=user,
+                transaction_type="Income",
+                date__year=current_year,
+                date__month=current_month
+            )
             .aggregate(total=Sum("amount"))["total"]
             or 0
         )
 
-        # Total Expense
+        # Total Expense for current month
         total_expense = (
-            Transaction.objects.filter(user=user, transaction_type="Expense")
+            Transaction.objects.filter(
+                user=user,
+                transaction_type="Expense",
+                date__year=current_year,
+                date__month=current_month
+            )
             .aggregate(total=Sum("amount"))["total"]
             or 0
         )
@@ -92,7 +102,7 @@ class DashboardAPIView(APIView):
         total_budget = latest_budget.amount if latest_budget else 0
         budget_remaining = latest_budget.budget_remaining if latest_budget else 0
 
-        # Monthly Income & Expense
+        # Monthly Income & Expense (for chart)
         monthly_data = (
             Transaction.objects.filter(user=user)
             .annotate(month=TruncMonth("date"))
@@ -117,9 +127,14 @@ class DashboardAPIView(APIView):
             for month, values in monthly_summary.items()
         ]
 
-        # Category-wise Expense
+        # Category-wise Expense for current month
         category_data = (
-            Transaction.objects.filter(user=user, transaction_type="Expense")
+            Transaction.objects.filter(
+                user=user,
+                transaction_type="Expense",
+                date__year=current_year,
+                date__month=current_month
+            )
             .values("category__name")
             .annotate(amount=Sum("amount"))
         )
@@ -129,7 +144,7 @@ class DashboardAPIView(APIView):
             for item in category_data
         ]
 
-        # Serialize response
+        # Final response
         data = {
             "total_income": total_income,
             "total_expense": total_expense,
