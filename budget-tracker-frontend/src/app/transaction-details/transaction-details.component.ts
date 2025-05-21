@@ -185,6 +185,8 @@ resetFilters() {
       next: () => {
         this.transactions = this.transactions.filter(t => t.id !== id);
         this.loading = false;
+
+        this.message = 'Transaction deleted successfully.';
        
         //this.resetForm();
       },
