@@ -40,7 +40,7 @@ A modern web application to help users **track expenses, manage budgets**, and *
 | Frontend  | Angular, Bootstrap 5 |
 | Backend   | Django + Django REST Framework |
 | Charts    | D3.js (for all financial visualizations) |
-| Auth      | JWT-based Authentication (optional setup) |
+| Auth      | JWT-based Authentication |
 | Hosting   | Vercel (Frontend),(Backend) |
 
 ---
