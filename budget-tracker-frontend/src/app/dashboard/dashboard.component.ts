@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {  DashboardService } from '../services/dashboard.service';
 import { TransactionsComponent } from '../transactions/transactions.component';
 import { Category } from '../models/Category';
@@ -19,6 +19,9 @@ export class DashboardComponent {
   transactions: Transaction[] = [];
 dashboardData: any;
 
+@ViewChild(DashboardChartsComponent)
+  dashboardChartsComponent!: DashboardChartsComponent;
+
 selectedMonth: number = new Date().getMonth() + 1; // Default current month
 selectedYear: number = new Date().getFullYear();   // Default current year
 
@@ -36,8 +39,7 @@ months = [
   { value: 11, name: 'November' },
   { value: 12, name: 'December' },
 ];
-  constructor(private dashboardService: DashboardService, private dashboardChartsComponent: DashboardChartsComponent,
-  private cdr: ChangeDetectorRef) {}
+  constructor(private dashboardService: DashboardService) {}
 
   ngOnInit() {
     this.loadCategories();
@@ -54,7 +56,7 @@ months = [
     (data) => {
       this.dashboardData = data;
       this.dashboardChartsComponent.renderCategoryWiseExpenses(data.category_expenses);
-      this.cdr.detectChanges();
+      //this.dashboardChartsComponent.ngOnInit();
     },
     (error) => {
       console.error('Error fetching dashboard data:', error);
