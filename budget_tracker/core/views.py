@@ -65,10 +65,12 @@ class DashboardAPIView(APIView):
 
     def get(self, request):
         user = request.user
-        current_year = datetime.datetime.now().year
-        current_month = datetime.datetime.now().month
 
-        # Total Income for current month
+        # Get month and year from query params or default to current
+        current_year = int(request.query_params.get("year", datetime.datetime.now().year))
+        current_month = int(request.query_params.get("month", datetime.datetime.now().month))
+
+        # Total Income for selected month
         total_income = (
             Transaction.objects.filter(
                 user=user,
@@ -80,7 +82,7 @@ class DashboardAPIView(APIView):
             or 0
         )
 
-        # Total Expense for current month
+        # Total Expense for selected month
         total_expense = (
             Transaction.objects.filter(
                 user=user,
@@ -92,7 +94,7 @@ class DashboardAPIView(APIView):
             or 0
         )
 
-        # Latest Budget (for current month & year)
+        # Latest Budget (for selected month & year)
         latest_budget = (
             Budget.objects.filter(user=user, month=current_month, year=current_year)
             .order_by("-created_at")
@@ -102,7 +104,7 @@ class DashboardAPIView(APIView):
         total_budget = latest_budget.amount if latest_budget else 0
         budget_remaining = latest_budget.budget_remaining if latest_budget else 0
 
-        # Monthly Income & Expense (for chart)
+        # Monthly Income & Expense for charts (can keep as-is or also filter by year if needed)
         monthly_data = (
             Transaction.objects.filter(user=user)
             .annotate(month=TruncMonth("date"))
@@ -127,7 +129,7 @@ class DashboardAPIView(APIView):
             for month, values in monthly_summary.items()
         ]
 
-        # Category-wise Expense for current month
+        # Category-wise Expense for selected month
         category_data = (
             Transaction.objects.filter(
                 user=user,
@@ -144,7 +146,6 @@ class DashboardAPIView(APIView):
             for item in category_data
         ]
 
-        # Final response
         data = {
             "total_income": total_income,
             "total_expense": total_expense,

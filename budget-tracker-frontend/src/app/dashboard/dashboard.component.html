@@ -7,6 +7,22 @@
        
       </div>
 
+      <div class="row mb-3">
+  <div class="col-md-3">
+    <label for="month" class="form-label">Select Month</label>
+    <select [(ngModel)]="selectedMonth" class="form-select" id="month">
+      <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label for="year" class="form-label">Select Year</label>
+    <input [(ngModel)]="selectedYear" type="number" class="form-control" id="year" />
+  </div>
+  <div class="col-md-3 d-flex align-items-end">
+    <button class="btn btn-primary w-100" (click)="fetchDashboard()">Apply</button>
+  </div>
+</div>
+
       <!-- Cards row -->
       <div class="row g-4">
   <div class="col-sm-6 col-lg-3">

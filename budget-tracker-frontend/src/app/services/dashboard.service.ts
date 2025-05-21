@@ -13,9 +13,9 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {}
 
-  getDashboardData() {
-    return this.http.get<any>(`${this.baseUrl}/dashboard/`);
-  }
+  getDashboardData(month: number, year: number) {
+  return this.http.get<any>(`${this.baseUrl}/dashboard/?month=${month}&year=${year}`);
+}
 
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.baseUrl}/categories/`);
