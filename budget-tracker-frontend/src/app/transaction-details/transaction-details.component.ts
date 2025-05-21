@@ -164,10 +164,7 @@ resetFilters() {
     this.transactionsService.addTransaction(this.newTransaction).subscribe({
       next: (data) => {
         this.transactions.push(data);
-         this.transactions.forEach(transaction => {
-      this.getCategoryNameAndPutInTransaction(transaction);
-      this.loading = false;
-    });
+       this.loadTransactions();
        
       },
       error: (err) => {
