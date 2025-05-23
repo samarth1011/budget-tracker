@@ -57,7 +57,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form (ngSubmit)="updateCategory(cat.id, this.editCategory.name)" #categoryForm="ngForm">
+                <form (ngSubmit)="updateCategory(this.editCategory.id, this.editCategory.name)" #categoryForm="ngForm">
                   <div class="mb-3" style="text-align: left;" >
                     <label for="categoryName"  class="form-label">Category Name</label>
                     <input type="text" class="form-control" id="categoryName" [(ngModel)]="this.editCategory.name" name="name" required>

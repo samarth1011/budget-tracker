@@ -100,6 +100,7 @@ categories: Category[] = [];
   //get category by id
   getCategoryById(id: number) {
     this.loading = true;
+    this.editCategory.id = id;
     this.categoriesService.getCategory(id).subscribe({
       next: (data) => {
         this.editCategory = data;
