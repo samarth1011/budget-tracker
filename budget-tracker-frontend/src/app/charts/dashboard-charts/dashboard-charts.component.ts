@@ -38,14 +38,15 @@ months = [
       this.renderCategoryWiseExpenses(data.category_expenses);
     });
   }
-renderIncomeExpenseTrend(monthlyData: any[]) {
+
+  renderIncomeExpenseTrend(monthlyData: any[]) {
   const svg = d3.select('#trendChart')
     .attr('width', 500)
     .attr('height', 300);
 
-  svg.selectAll('*').remove(); // Clear previous contents
+  svg.selectAll('*').remove();
 
-  const margin = { top: 20, right: 20, bottom: 40, left: 60 };
+  const margin = { top: 20, right: 20, bottom: 40, left: 50 };
   const width = 500 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
 
@@ -58,7 +59,6 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
 
   const maxY = d3.max([...income, ...expenses]) || 0;
 
-  // 🧠 Calculate a dynamic "step" size for Y-axis ticks
   const getNiceStep = (max: number) => {
     const magnitude = Math.pow(10, Math.floor(Math.log10(max)));
     const normalized = max / magnitude;
@@ -69,7 +69,7 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
   };
 
   const step = getNiceStep(maxY);
-  const yMax = Math.ceil(maxY / step) * step;
+  const yMax = Math.ceil((maxY * 1.1) / step) * step;
 
   const x = d3.scaleBand()
     .domain(months)
@@ -85,7 +85,7 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .attr('transform', `translate(0,${height})`)
     .call(d3.axisBottom(x));
 
-  // Y Axis with smart tick interval
+  // Y Axis with smart ticks
   g.append('g')
     .call(d3.axisLeft(y).tickValues(d3.range(0, yMax + step, step)));
 
@@ -110,7 +110,7 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .attr('text-anchor', 'middle')
     .attr('fill', '#28a745')
     .style('font-size', '10px')
-    .text(d => `₹${d.income}`);
+    .text(d => `₹${d.income.toFixed(2)}`);
 
   // Expense Bars
   g.selectAll('.bar-expense')
@@ -133,10 +133,8 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .attr('text-anchor', 'middle')
     .attr('fill', '#dc3545')
     .style('font-size', '10px')
-    .text(d => `₹${d.expense}`);
+    .text(d => `₹${d.expense.toFixed(2)}`);
 }
-
-
   renderCategoryWiseExpenses(categoryData: any[]) {
   const svg = d3.select('#categoryPie')
     .attr('width', 400)
