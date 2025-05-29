@@ -43,40 +43,53 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .attr('width', 500)
     .attr('height', 300);
 
+  svg.selectAll('*').remove(); 
+
+  const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+  const width = 500 - margin.left - margin.right;
+  const height = 300 - margin.top - margin.bottom;
+
+  const g = svg.append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`);
+
   const months = monthlyData.map(d => d.month);
   const income = monthlyData.map(d => d.income);
   const expenses = monthlyData.map(d => d.expense);
 
-  const x = d3.scaleBand().domain(months).range([50, 450]).padding(0.1);
+  const maxY = d3.max([...income, ...expenses]) || 0;
+
+  const x = d3.scaleBand()
+    .domain(months)
+    .range([0, width])
+    .padding(0.2);
+
   const y = d3.scaleLinear()
-    .domain([0, d3.max([...income, ...expenses]) || 0])
+    .domain([0, maxY * 1.1])
     .nice()
-    .range([250, 50]);
+    .range([height, 0]);
 
-  svg.selectAll('*').remove(); // Clear old contents
-
-  // Axes
-  svg.append('g')
-    .attr('transform', 'translate(0,250)')
+  // X Axis
+  g.append('g')
+    .attr('transform', `translate(0,${height})`)
     .call(d3.axisBottom(x));
 
-  svg.append('g')
-    .attr('transform', 'translate(50,0)')
-    .call(d3.axisLeft(y));
+  // Y Axis
+  g.append('g')
+    .call(d3.axisLeft(y).ticks(Math.floor(height / 50)));
 
   // Income Bars
-  svg.selectAll('.bar-income')
+  g.selectAll('.bar-income')
     .data(monthlyData)
     .enter()
     .append('rect')
     .attr('x', d => x(d.month)!)
     .attr('y', d => y(d.income))
     .attr('width', x.bandwidth() / 2)
-    .attr('height', d => 250 - y(d.income))
+    .attr('height', d => height - y(d.income))
     .attr('fill', '#28a745');
 
   // Income Labels
-  svg.selectAll('.label-income')
+  g.selectAll('.label-income')
     .data(monthlyData)
     .enter()
     .append('text')
@@ -88,18 +101,18 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .text(d => `₹${d.income}`);
 
   // Expense Bars
-  svg.selectAll('.bar-expense')
+  g.selectAll('.bar-expense')
     .data(monthlyData)
     .enter()
     .append('rect')
     .attr('x', d => x(d.month)! + x.bandwidth() / 2)
     .attr('y', d => y(d.expense))
     .attr('width', x.bandwidth() / 2)
-    .attr('height', d => 250 - y(d.expense))
+    .attr('height', d => height - y(d.expense))
     .attr('fill', '#dc3545');
 
   // Expense Labels
-  svg.selectAll('.label-expense')
+  g.selectAll('.label-expense')
     .data(monthlyData)
     .enter()
     .append('text')
@@ -110,6 +123,7 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .style('font-size', '10px')
     .text(d => `₹${d.expense}`);
 }
+
 
 
   renderCategoryWiseExpenses(categoryData: any[]) {
