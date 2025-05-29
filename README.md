@@ -92,5 +92,5 @@ Then visit: http://localhost:4200
 
 - Pie chart for category distribution
 
-- Bar Chart for month expense comparison
+- Bar Chart for month expense comparison.
 
