@@ -43,9 +43,9 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .attr('width', 500)
     .attr('height', 300);
 
-  svg.selectAll('*').remove(); 
+  svg.selectAll('*').remove(); // Clear previous contents
 
-  const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+  const margin = { top: 20, right: 20, bottom: 40, left: 60 };
   const width = 500 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
 
@@ -58,14 +58,26 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
 
   const maxY = d3.max([...income, ...expenses]) || 0;
 
+  // 🧠 Calculate a dynamic "step" size for Y-axis ticks
+  const getNiceStep = (max: number) => {
+    const magnitude = Math.pow(10, Math.floor(Math.log10(max)));
+    const normalized = max / magnitude;
+
+    if (normalized <= 2) return magnitude / 5;
+    if (normalized <= 5) return magnitude / 2;
+    return magnitude;
+  };
+
+  const step = getNiceStep(maxY);
+  const yMax = Math.ceil(maxY / step) * step;
+
   const x = d3.scaleBand()
     .domain(months)
     .range([0, width])
     .padding(0.2);
 
   const y = d3.scaleLinear()
-    .domain([0, maxY * 1.1])
-    .nice()
+    .domain([0, yMax])
     .range([height, 0]);
 
   // X Axis
@@ -73,9 +85,9 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .attr('transform', `translate(0,${height})`)
     .call(d3.axisBottom(x));
 
-  // Y Axis
+  // Y Axis with smart tick interval
   g.append('g')
-    .call(d3.axisLeft(y).ticks(Math.floor(height / 50)));
+    .call(d3.axisLeft(y).tickValues(d3.range(0, yMax + step, step)));
 
   // Income Bars
   g.selectAll('.bar-income')
@@ -123,7 +135,6 @@ renderIncomeExpenseTrend(monthlyData: any[]) {
     .style('font-size', '10px')
     .text(d => `₹${d.expense}`);
 }
-
 
 
   renderCategoryWiseExpenses(categoryData: any[]) {
