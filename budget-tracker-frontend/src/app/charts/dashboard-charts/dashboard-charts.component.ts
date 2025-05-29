@@ -74,7 +74,7 @@ months = [
   const x = d3.scaleBand()
     .domain(months)
     .range([0, width])
-    .padding(0.2);
+    .padding(0.3);
 
   const y = d3.scaleLinear()
     .domain([0, yMax])
@@ -85,9 +85,11 @@ months = [
     .attr('transform', `translate(0,${height})`)
     .call(d3.axisBottom(x));
 
-  // Y Axis with smart ticks
+  // Y Axis
   g.append('g')
     .call(d3.axisLeft(y).tickValues(d3.range(0, yMax + step, step)));
+
+  const barWidth = x.bandwidth() / 2;
 
   // Income Bars
   g.selectAll('.bar-income')
@@ -96,45 +98,47 @@ months = [
     .append('rect')
     .attr('x', d => x(d.month)!)
     .attr('y', d => y(d.income))
-    .attr('width', x.bandwidth() / 2)
+    .attr('width', barWidth)
     .attr('height', d => height - y(d.income))
     .attr('fill', '#28a745');
-
-  // Income Labels
-  g.selectAll('.label-income')
-    .data(monthlyData)
-    .enter()
-    .append('text')
-    .attr('x', d => x(d.month)! + x.bandwidth() / 4)
-    .attr('y', d => y(d.income) - 5)
-    .attr('text-anchor', 'middle')
-    .attr('fill', '#28a745')
-    .style('font-size', '10px')
-    .text(d => `₹${d.income.toFixed(2)}`);
 
   // Expense Bars
   g.selectAll('.bar-expense')
     .data(monthlyData)
     .enter()
     .append('rect')
-    .attr('x', d => x(d.month)! + x.bandwidth() / 2)
+    .attr('x', d => x(d.month)! + barWidth)
     .attr('y', d => y(d.expense))
-    .attr('width', x.bandwidth() / 2)
+    .attr('width', barWidth)
     .attr('height', d => height - y(d.expense))
     .attr('fill', '#dc3545');
+
+  // Income Labels
+  g.selectAll('.label-income')
+    .data(monthlyData)
+    .enter()
+    .append('text')
+    .attr('x', d => x(d.month)! + barWidth / 2)
+    .attr('y', d => y(d.income) - 5)
+    .attr('text-anchor', 'middle')
+    .attr('fill', '#28a745')
+    .style('font-size', '10px')
+    .text(d => `₹${d.income.toFixed(2)}`);
 
   // Expense Labels
   g.selectAll('.label-expense')
     .data(monthlyData)
     .enter()
     .append('text')
-    .attr('x', d => x(d.month)! + (3 * x.bandwidth()) / 4)
+    .attr('x', d => x(d.month)! + (3 * barWidth) / 2)
     .attr('y', d => y(d.expense) - 5)
     .attr('text-anchor', 'middle')
     .attr('fill', '#dc3545')
     .style('font-size', '10px')
     .text(d => `₹${d.expense.toFixed(2)}`);
 }
+
+
   renderCategoryWiseExpenses(categoryData: any[]) {
   const svg = d3.select('#categoryPie')
     .attr('width', 400)
